@@ -1,10 +1,24 @@
 from tkinter import *
 
+def arruma(entrada):
+	nova = ''
+	entrada = entrada.replace(' ','')
+	for c in range(len(entrada)):
+		if c < len(entrada)-1:
+			if entrada[c+1] in '+/*-' or entrada[c] in '+/*-':
+				nova += entrada[c] + ' '
+			else:
+				nova += entrada[c]
+		else:
+			nova += entrada[-1]
+	return nova
+
 def calculator():
-	tudo = entrada.get()
-	x = float(tudo[0])
-	y = float(tudo[2])
-	operador = tudo[1]
+	tudo = arruma(entrada.get())
+	tudo1 = tudo.split(' ')
+	x = float(tudo1[0])
+	y = float(tudo1[2])
+	operador = tudo1[1]
 	if operador == '+':
 		resultado = x + y
 	if operador == '-':
