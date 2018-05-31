@@ -1,4 +1,6 @@
 from tkinter import *
+import sys
+import os
 
 def arruma(entrada):
 	nova = ''
@@ -13,7 +15,9 @@ def arruma(entrada):
 			nova += entrada[-1]
 	return nova
 
-
+def restart():
+    python = sys.executable
+    os.execl(python, python, * sys.argv)
 
 def calculator():
 	historico = []
@@ -30,7 +34,7 @@ def calculator():
 		resultado = x * y
 	if operador == '/':
 		resultado = x / y
-	historia = tudo + ' = ' + str(resultado)
+	historia = tudo + ' = ' + '{:.2f}'.format(resultado)
 	historico.append(historia)
 	lb2['text'] += historia + '\n'
 	lb['text'] = tudo + ' = ' + str(resultado)
@@ -50,6 +54,8 @@ lb2.place(x=225,y=120)
 bt = Button(janela, width=12, text='OK', command=calculator)
 bt.place(x=100,y=160)
 
+bt_limpa = Button(janela,width=12, text='Restart', command=restart)
+bt_limpa.place(x=100,y=200)
 
 
 
