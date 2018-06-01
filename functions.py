@@ -1,17 +1,23 @@
 #Used libraries
 from tkinter import *
+from functools import partial
 
 #Class
 class Calculator():
 	def __init__(self, window):
+		#font
+		self.font = ('Verdana', 10)
+		self.font2 = ('Verdana', 13)
+
+
 		#Frame where is the history
 		self.frame_hist = Frame(window)
 
 		#Frase where is the main box
-		self.frame_box = Frame(window)
+		self.frame_box = Frame(window, pady = 2, padx = 1)
 
 		#Frame where is the buttons
-		self.frame_btt = Frame(window)
+		self.frame_btt = Frame(window,padx = 2,pady = 2)
 
 		#Frame operators
 		self.frame_op = Frame(self.frame_btt)
@@ -21,7 +27,7 @@ class Calculator():
 		self.history.pack
 
 		#Main text box
-		self.box = Entry(self.frame_box,width=34)
+		self.box = Entry(self.frame_box, font=self.font2,width=18)
 		self.box.pack()
 
 		#Pack order
@@ -37,20 +43,28 @@ class Calculator():
 				subframe = Frame(self.frame_btt)
 				subframe.pack()
 
-			bt = Button(subframe, text=buttons[c], width=6,height=2)
+			bt = Button(subframe, text=buttons[c], width=5,height=2, font = self.font, bg='gray83', command = partial(self.PutButtons, buttons[c]))
 			bt.pack(side = LEFT)
 
-		self.bt_clr = Button(subframe, text='CE',width=6, height=2, bg='gray')
+		self.bt_clr = Button(subframe, text='CE', width=5, height=2, bg='snow', font = self.font, command = self.clear)
 		self.bt_clr.pack(side=LEFT)
 
-		self.bt_equal = Button(subframe, text='=',width=6, height=2, bg='gray')
+		self.bt_equal = Button(subframe, text='=', width=5, height=2, bg='snow', font = self.font, command = self.equal)
 		self.bt_equal.pack(side=LEFT)
 
 		buttons1 = ('+','-','*','/')
 		for c in buttons1:
-			bt = Button(self.frame_op, text=c, width=6,height=2,bg='green')
+			bt = Button(self.frame_op, text=c, width=5, height=2, bg='snow', font = self.font, command =partial(self.PutButtons, c))
 			bt.pack()
 		
+	def PutButtons(self, button):
+		self.box.insert(END, button)
+
 
 	def equal(self):
-		self.box.insert(0, 'teste')
+		aux = self.box.get()
+		self.box.delete(0, END)
+		self.box.insert(END, eval(aux))
+
+	def clear(self):
+		self.box.delete(0, END)
