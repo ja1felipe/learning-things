@@ -72,7 +72,7 @@ class Calculator():
 			div_bt = Button(self.frame_diver, text = c, width=5, height=2, bg='steel blue', font = self.font, command= partial(self.diverses, c))
 			div_bt.pack(side = LEFT)
 
-		self.bt_sv = Button(self.frame_diver, text = 'Save', width=5, height=2, bg='steel blue', font = self.font, command = self.save)
+		self.bt_sv = Button(self.frame_diver, text = 'Save', width=5, height=2, bg='steel blue', font = self.font, command = self.save_func)
 		self.bt_sv.pack(side=LEFT)
 		
 			#Operators
@@ -100,6 +100,8 @@ class Calculator():
 		self.box.delete(0, END)
 		self.history.configure(state=NORMAL)
 		self.history.delete(0, END)
+		self.bt_sv['text'] = 'Save'
+		self.bt_sv['command'] = self.save_func
 
 	def diverses(self, button):
 		if button == '√':
@@ -110,6 +112,7 @@ class Calculator():
 			a = int(len(self.box.get()))
 			self.box.delete(a-1)
 		
-	def save(self):
-		self.save = str(eval(self.aux))
-		self.bt_sv = Button(self.frame_diver, text = self.save, width=5, height=2, bg='steel blue', font = self.font, command = self.save)
+	def save_func(self):
+		self.save = str(eval(self.box.get().replace(' ','')))
+		self.bt_sv['text'] = self.save
+		self.bt_sv['command'] = partial(self.PutButtons, self.save)

@@ -12,5 +12,4 @@ window.resizable(0,0)
 window.wm_iconbitmap('icon.ico')
 
 #Run the program
-
 window.mainloop()
